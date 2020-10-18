@@ -1,0 +1,908 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>A Super Tiny Framework-Agnostic CSS-in-JS</title>
+
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/black.css" id="theme">
+    <link rel="stylesheet" href="dist/demo.css" >
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section>
+          <img src="examples/assets/jsnf-logo.png"/>
+          <h2>A Super Tiny Framework-Agnostic <br>CSS-in-JS</h2>
+          <p>Rajasegar Chandran</p>
+          <aside class="notes">
+Hello everyone, My name is Rajasegar Chandran. I am from Chennai, India. It’s really been an honour and privilege for me to be part of Javascript and Friends, thank you for having me here.
+          </aside>
+        </section>
+        <section>
+          <h3 class="yellow">About me</h3>
+          <p>Front-end @ Freshworks Inc</p>
+          <ul>
+            <li><a target="_blank" href="https://github.com/rajasegar">github/rajasegar</a></li>
+            <li><a target="_blank" href="https://twitter.com/rajasegar_c">twitter/rajasegar_c</a></li>
+            <li><a target="_blank" href="https://hangaroundtheweb.com">hangaroundtheweb.com</a></li>
+          </ul>
+
+          <aside class="notes">
+            This is about me. I am working as a Front-end Developer at a company called Freshworks. We build simple and innovative SAAS products which offer CRM solutions for businesses of all sizes.
+          </aside>
+        </section>
+        <section>
+          <h1>CSS-in-JS</h1>
+          <p><a href="https://github.com/lukejacksonn/csz">csz</a></p>
+          <aside class="notes">
+            This is a talk about a CSS-in-JS library called csz. Before diving into the topic let’s set some context about CSS-in-JS solutions, how it all started, why it became a viable option for styling components in the first place.
+            </aside> 
+        </section>
+        <section>
+          <iframe src="https://player.vimeo.com/video/116209150" width="640" height="360" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+<p><a href="https://vimeo.com/116209150">React: CSS in your JS by Christopher Chedeau</a> from <a href="https://vimeo.com/user24051491">Nation Conferences</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
+          <p><a target="_blank" href="https://blog.vjeux.com/2014/javascript/react-css-in-js-nationjs.html">Blog post</a></p>
+          <aside class="notes">
+            As far as I can remember it all started in November 2014, when Christopher Chedeau from the Facebook Front-end Infrastructure team gave a very thought-provoking talk that attempts to show that CSS has fundamental flaws and writing styling in JS solves most of the problems.
+            </aside> 
+        </section>
+        <section>
+          <h3 class="yellow">CSS: Problems at Scale</h3>
+          <ul>
+            <li>Global Namespace</li>
+            <li>Dependencies</li>
+            <li>Dead Code Elimination</li>
+            <li>Minification</li>
+            <li>Sharing Constants</li>
+            <li>Non-deterministic resolution</li>
+            <li>Isolation</li>
+          </ul>
+          <p><a target="_blank" href="https://blog.vjeux.com/2014/javascript/react-css-in-js-nationjs.html">Blog post</a></p>
+          <aside class="notes">
+            He talked about problems of using CSS at scale such as Global Namespace, Dependencies, Dead Code elimination and so on. He also showed us how we can use CSS in JS to solve these problems without bringing in any kind of hacky solutions.
+
+            </aside> 
+        </section>
+        <section>
+          <ul>
+            <li>Styled Components</li>
+            <li>Emotion</li>
+            <li>Glamorous</li>
+            <li>Fela</li>
+            <li>aphrodite</li>
+            <li>glamor</li>
+            <li>styletron</li>
+            <li>JSS</li>
+            <li>linaria</li>
+            <li>react-jss</li>
+          </ul>
+          <aside class="notes">
+            From then on, the web development community has come up with a lot of CSS-in-JS solutions
+            </aside> 
+        </section>
+        <section>
+          <img src="examples/assets/css-evolution.png"/>
+          <p><a target="_blank" href="https://medium.com/@perezpriego7/css-evolution-from-css-sass-bem-css-modules-to-styled-components-d4c1da3a659b">CSS Evolution: From CSS, SASS, BEM, CSS Modules to Styled Components</a></p>
+          <aside class="notes">
+            CSS-in-JS has been one of the biggest evolutions in the CSS world. Just like preprocessors bypassed CSS to introduce their own set of new features over a decade ago, CSS-in-JS libraries rely on JavaScript's power to make their own path.
+            </aside> 
+        </section>
+
+        <section>
+          <h3 class="yellow">CSS-in-JS</h3>
+          <p>
+          “ the overall ecosystem is still very fragmented and in
+          constant movement. So it remains to be seen what
+          place CSS-in-JS will occupy in the overall ecosystem in
+          the long run.”
+          </p>
+          <a target="_blank" href="https://2019.stateofcss.com/technologies/css-in-js/">CSS 2019</a>
+          <aside class="notes">
+            According to the State of CSS 2019, some libraries like Styled Components and Emotion have established themselves as solid options, the overall ecosystem is still very fragmented and in constant movement. So it remains to be a big question what place CSS-in-JS will occupy in the long run.
+            </aside> 
+        </section>
+        <section>
+          <img src="examples/assets/simply-meme.jpg"/>
+          <ul>
+            <li>Compilation</li>
+            <li>Build</li>
+            <li>Static</li>
+            <li>Plugins</li>
+            <li>Syntax</li>
+            <li>Loaders</li>
+          </ul>
+          <aside class="notes">
+            And using CSS-in-JS comes with its own set of challenges. We need to compile them because they use a special syntax which is not supported and again we need to load the necessary plugins and a build step is essential to generate the final css output.
+          </aside>
+        </section>
+        <section>
+          <h3 class="yellow">Why?</h3>
+          <ul>
+            <li class="fragment fade-up">Framework Agnostic CSS-in-JS</li>
+            <li class="fragment fade-up">Load styles dynamically from .css files withouth FOUC</li>
+            <li class="fragment fade-up">Efficient Caching of styles</li>
+            <li class="fragment fade-up">Write CSS in SASS like Way </li>
+            <li class="fragment fade-up">No Bundling / Compilation </li>
+          </ul>
+          <aside class="notes">
+            You might be thinking why should I choose csz over other solutions, what kind of problems it solves for us?
+            Let’s look at a list of scenarios where we can make use of csz. If you are looking for a framework-agnostic CSS-in-JS solution, then csz can be the right candidate for you. If you want to load styles dynamically from .css files without having to worry about flashes of unstyled content then you should go for csz. If you want your style definitions to be cached effectively then csz might be the right choice for you. If you want to write CSS in SASS like style with nested selectors and all, then csz might be able to help you out. And finally if you are the one who is looking for a bundle-less solution for your css assets then csz is the perfect tool for the job.
+            </aside> 
+        </section>
+        <section>
+          <h1>What?</h1>
+          <aside class="notes">
+            So what is csz?
+            </aside> 
+        </section>
+        <section>
+          <p class="yellow">Runtime CSS Modules with SASS like pre-processing</p>
+          <p><a target="_blank" href="https://github.com/lukejacksonn/csz">github.com/lukejacksonn/csz</a></p>
+          <img src="examples/assets/luke.jpg"/>
+          <aside class="notes">
+It’s a runtime CSS Modules with SASS like preprocessing. It is created by Luke Jackson. Luke is a front-end developer from London. He also created some other amazing tools like perflink, servor, etc.,
+</aside> 
+        </section>
+        <section>
+          <h2 class="yellow">Super Tiny</h2>
+          <p>Just 49 lines of JavaScript</p>
+          <img src="examples/assets/tiny-meme.jpg"/>
+          <aside class="notes">
+            csz is super tiny in the sense that it’s just 49 lines of JS. What I  mean by 49 lines is the physical lines including all the line breaks.
+
+
+            </aside> 
+        </section>
+        <section>
+          <p>Source code</p>
+          <pre>
+          <code data-noescape data-line-numbers>
+import stylis from './stylis.js';
+const cache = {};
+const hash = () => Math.random() .toString(36) .replace('0.', '');
+const sheet = document.createElement('style');
+document.head.appendChild(sheet);
+const none = hash => `.${hash}{display:none}`;
+const hide = hash => (sheet.innerHTML = none(hash) + sheet.innerHTML);
+const show = 
+  hash => (sheet.innerHTML = sheet.innerHTML.replace(none(hash), ''));
+const isExternalStyleSheet = key => /^(\/|https?:\/\/)/.test(key.trim());
+const process = key => hash => rules => {
+  sheet.innerHTML += (cache[key] = {
+    hash,
+    rules: stylis()(`.${hash}`, rules)
+  }).rules;
+  if (isExternalStyleSheet(key)) show(hash);
+};
+export default (strings, ...values) => {
+  const key = strings[0].startsWith('/')
+    ? strings[0]
+    : strings.reduce(
+        (acc, string, i) =>
+          (acc += string + (values[i] == null ? '' : values[i])),
+        ''
+      );
+  if (cache[key]) return cache[key].hash;
+  const className = 'csz-' + hash();
+  const append = process(key)(className);
+  if (isExternalStyleSheet(key)) {
+    hide(className);
+    fetch(key)
+      .then(res => res.text())
+      .then(append);
+  } else append(key);
+  return className;
+}; 
+          </code>
+          </pre>
+          <aside class="notes">
+
+And if you remove the line breaks it’s just 31 lines and it can fit entirely in a single slide.
+</aside> 
+
+        </section>
+        <section>
+          <h2>BundlePhobia</h2>
+          <a target="_blank" href="https://bundlephobia.com/result?p=csz@1.2.0">csz</a>
+            <aside class="notes">
+              And there is this thing called BundlePhobia.com where you can check the production footprint of the libraries you are using. And csz is just 12.3 kb when it is minified and 5 Kb when compressed with gzip. It has got no external dependencies.
+            </aside>
+        </section>
+        <section>
+          <h4 class="yellow">Framework-Agnostic</h4>
+          <p>React, Vue, Ember, Preact, Svelte, ...</p>
+          <p>
+          <img src="examples/assets/new-framework-meme.jpg" height="300"/>
+          </p>
+          <aside class="notes">
+And it is completely framework agnostic. It is not specifically tailored for any Javascript frameworks to work with. Unlike Styled Components which is mainly targeted for component based frameworks like React.js. Whereas csz can work with any framework. You can use it in frameworks like React, Ember, Vue.js, Preact and Svelte. It just works seamlessly.
+          </aside>
+        </section>
+        <section>
+          <h3 class="yellow">Run-time only class name generation & </h3>
+          <p>Ruleset Isolation</p>
+          <img src="examples/assets/no-compilation-meme.jpg"/>
+          <aside class="notes">
+Luke was inspired by emotion and styled-components but unfortunately neither of these packages expose an ES module compatible build and come with quite a lot of extraneous functionality that isn't required when the scope of the project is restricted to runtime only class name generation and ruleset isolation.
+
+          </aside>
+        </section>
+        <section>
+          <h3 class="yellow">Loading in stylesheets (.css) dynamically</h3>
+          <p>during runtime in the browser (not compile time)</p>
+          <img src="examples/assets/lazy-loading-meme.jpg"/>
+          <aside class="notes">
+Loading in stylesheets dynamically – from .css files – is supported out of the box, so you can write your styles in .css files and import them via url without having to worry about flashes of unstyled content.
+
+          </aside>
+        </section>
+        <section>
+          <img src="examples/assets/sass-logo.png" height="200"/>
+          <h3 class="yellow">SASS like preprocessing</h3>
+          <ul>
+            <li>Nested Selectors</li>
+            <li>Global style injection</li>
+            <li>Vendor prefixing</li>
+          </ul>
+          <aside class="notes">
+csz supports SASS like preprocessing which means you can use nested selectors, or simply you can write your CSS in SASS like style. This would definitely help people who want to move from SASS to get rid of all the compilation and build stuff but still want to keep the good parts of SASS conventions. How does csz do that?
+          </aside>
+        </section>
+        <section>
+          <img src="examples/assets/csz-stylis.jpg"/>
+          <aside class="notes">
+Csz actually relies on something called Stylis.
+
+          </aside>
+        </section>
+        <section>
+          <pre>
+          <code>
+          <p className=${css`text-align:center;`}>
+          I am a center aligned text.
+          </p>
+          </code>
+          </pre>
+          <p>&darr;</p>
+          <pre><code>
+<style>
+.csz-a4B7ccH9 {
+  text-align: center;
+}
+</style>
+          </code></pre>
+          <aside class="notes">
+It uses stylis to parse styles from tagged template literals and append them to the head of the document at runtime.
+
+          </aside>
+        </section>
+        <section>
+          <h2>stylis</h2>
+          <p><a target="_blank" href="https://github.com/thysultan/stylis.js">github.com/thysultan/stylis.js</a></p>
+          <img src="examples/assets/styled-components-logo.jpg" height="200"/>
+          <img src="examples/assets/emotion-logo.jpg" height="200"/>
+          <aside class="notes">
+            Stylis is a light-weight CSS preprocessor created by Sultan Tarimo. Stylis is the preprocessor which is internally used by libraries like Styled-components and Emotion.
+            </aside> 
+          </aside>
+        </section>
+        <section>
+          <h3 class="yellow">Stylis</h3>
+          <p>Features:</p>
+          <ul>
+            <li>Nesting a { &:hover {} }</li>
+            <li>Selector namespacing</li>
+            <li>Vendor prefixing (flex-box, etc...)</li>
+            <li>Minification</li>
+            <li>ESM module compatible</li>
+            <li>Tree-shaking-able</li>
+          </ul>
+          <aside class="notes">
+Stylis supports a wide array of features like Nesting, Selector namespacing, vendor prefixing and so on.
+          </aside>
+        </section>
+        <section>
+          <h3 class="yellow">No build tools required</h3>
+          <p>Just works in the browser on the fly...</p>
+          <img src="examples/assets/webpack-meme.jpg" height="300"/>
+          <aside class="notes">
+And finally if you want to use csz, you don’t require any build tools or bundlers like Webpack. This is one of the distinguishing features of csz when compared with other CSS-in-JS libraries. csz does not need any compilation or build process. It is specifically designed to work directly in the browser.
+          </aside>
+        </section>
+        <section>
+          <h2>Using csz</h2>
+          <aside class="notes">
+Now we will see how to use csz inside your applications. We will take a look at different use-cases, patterns and examples.
+          </aside>
+        </section>
+        <section>
+          <h3>Importing csz (Node)</h3>
+          <pre><code>
+          import css from 'csz';
+          </code></pre>
+          <aside class="notes">
+if you are using any build tools like Webpack or any other bundlers, you import csz directly from the package as an ES6 Import.
+          </aside>
+        </section>
+        <section>
+          <h3>Importing csz (Browser)</h3>
+          <pre><code>
+          import css from 'https://unpkg.com/csz';
+          </code></pre>
+          <aside class="notes">
+And you can also hotlink the package directly from unpkg.com.
+          </aside>
+        </section>
+        <section>
+          <h2 class="yellow">unpkg</h2>
+          <p>unpkg.com/:package@:version/:file</p>
+          <p>unpkg.com/react@16.7.0/umd/react.production.min.js</p>
+          <img src="examples/assets/michael-jackson.jpg" height="200"/>
+          <h4>&#128747;</h4>
+          <aside class="notes">
+unpkg is a fast, global CDN for everything on npm. You can use it to quickly and easily load any file from any package using a URL. It was  created by Michael Jackson. Did you know he hacked something together in an airport one night as he was waiting to board the plane and published it as npmcdn.com. About a year later he changed the name to unpkg.com and it stuck.
+          </aside>
+        </section>
+        <section>
+          <p>Inline usage</p>
+          <pre><code>
+          // static
+          // generate class name for ruleset
+          const inlined = css`background: blue;`;
+          </code>
+          </pre>
+          <aside class="notes">
+If a ruleset is provided as a string then it is processed immediately
+          </aside>
+        </section>
+        <section>
+          <p>Using external stylesheets</p>
+          <pre><code>
+          // dynamic (from stylesheet)
+          // generate class name for file contents
+          const relative = css`/index.css`;
+
+          // dynamic (from url)
+          // generate class name for file contents
+          const absolute = css`https://example.com/index.css`;
+          </code></pre>
+          <aside class="notes">
+but if a filepath is provided then processing is deferred until the contents of the file has been fetched and parsed.
+          </aside>
+        </section>
+        <section>
+          <p>Hello world example</p>
+          <pre><code data-line-numbers=4-8,11-14>
+          <script type="text/template">const App = () => {
+  return html`
+    <div
+      className=${css`
+        font-size: 1.5em;
+        text-align: center;
+        color: palevioletred;
+      `}
+    >
+      <h1
+        className=${css`
+          padding: 4em;
+          background: papayawhip;
+        `}
+      >
+        Hello World!
+      </h1>
+    </div>
+  `;
+};
+          </script>
+          </code></pre>
+<aside class="notes">
+This is a typical hello world example for csz. Just like the same example you might have seen in the Styled components documentation. Here we are using the inline style by applying the ruleset from tagged template literals to the class names of the elements.
+</aside>
+        </section>
+        <section>
+          <p>Dynamically generated class names</p>
+          <pre><code>
+.csz-pr8icladqd9 {
+ font-size:1.5em;
+ text-align:center;
+ color:palevioletred;
+}
+.csz-1vhdvy1k9f8 {
+ padding:4em;
+ background:papayawhip;
+}
+          </code></pre>
+          <a target="_blank" href="http://localhost:8080/simple.html">Output</a>
+        </section>
+
+        <section>
+          <p>Hello world example - variation 2</p>
+          <pre><code data-line-numbers=2-11,15>
+          <script type="text/template">const App = () => {
+  const styles = {
+    wrapper: css`
+      font-size: 1.5em;
+      text-align: center;
+      color: palevioletred;
+      h1 {
+        padding: 4em;
+        background: papayawhip;
+      }`
+  };
+  return html`
+    <div
+      className=${styles.wrapper}>
+      <h1>
+        Hello World!
+      </h1>
+    </div>
+  `;
+};
+          </script>
+          </code></pre>
+          <aside class="notes">
+This is another variation, a more standard and common pattern of using style objects. Instead of applying inline we create an object for the parent element and apply that to the className and the style definitions and classes are automatically applied.
+          </aside>
+        </section>
+        <section>
+          <p>Adapting to props</p>
+          <pre><code data-line-numbers=5,6>
+          <script type="text/template">const Button = (props) => {
+  return html`
+    <button
+      className=${css`
+        background: ${props.primary ? "palevioletred" : "white"};
+        color: ${props.primary ? "white" : "palevioletred"};
+        font-size: 1em;
+        margin: 1em;
+        padding: 0.25em 1em;
+        border: 2px solid palevioletred;
+        border-radius: 3px;
+      `}
+    >
+      ${props.children}
+    </button>
+  `;
+};
+          </script>
+          </code></pre>
+          <a target="_blank" href="http://localhost:8080/adapting-props.html">Output</a>
+
+          <aside class="notes">
+This is another example of using csz for adapting styles based on properties to a component. If the primary property is passed to this button component here, the background color and color property will be changed accordingly.
+          </aside>
+        </section>
+        <section>
+          <p>Pseudo selectors</p>
+          <pre><code>
+          <script type="text/template">
+const Thing = (props) => {
+  return html`
+    <div
+      className=${css`
+        color: blue;
+
+        &:hover {
+          color: red; // <Thing> when hovered
+        }
+
+        & ~ & {
+          background: tomato; // <Thing> as a sibling of <Thing>, but maybe not directly next to it
+        }
+
+        & + & {
+          background: lime; // <Thing> next to <Thing>
+        }
+
+        &.something {
+          background: orange; // <Thing> tagged with an additional CSS class ".something"
+        }
+
+        .something-else & {
+          border: 1px solid; // <Thing> inside another element labeled ".something-else"
+        }
+      `}
+    >
+      ${props.children}
+    </div>
+  `;
+};
+          </script>
+          </code></pre>
+          <a target="_blank" href="http://localhost:8080/pseudo-selectors.html">Output</a>
+          <aside class="notes">
+This is another example of using pseudo elements, pseudo selectors and sibling selectors,
+          </aside>
+        </section>
+        <section>
+          <p>Animations</p>
+          <pre><code>
+          <script type="text/template">const App = () => {
+  return html`
+    <div className=${css`
+      display: inline-block;
+      animation: rotate 2s linear infinite;
+      padding: 2rem 1rem;
+      font-size: 1.2rem;
+
+      @keyframes rotate {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      `}
+    >
+    ${'<'} 💅 ${'>'}
+    </div>
+  `;
+};
+          </script>
+          </code></pre>
+          <a target="_blank" href="http://localhost:8080/animation.html">Output</a>
+          <aside class="notes">
+csz also supports Keyframe and animation namespacing
+          </aside>
+        </section>
+        <section>
+          <p>Theming - component definition<p>
+          <pre><code>
+          <script type="text/template">
+const Button = (props) => {
+  const defaultTheme = {
+    main: 'palevioletred'
+  };
+  const theme = props.theme || defaultTheme;
+  return html`
+    <button
+      className=${css`
+        font-size: 1em;
+        margin: 1em;
+        padding: 0.25em 1em;
+        border-radius: 3px;
+        background: white;
+        color: ${theme.main};
+        border: 2px solid ${theme.main};
+      `}
+    >
+      ${props.children}
+    </button>
+  `;
+};
+          </script>
+          </code></pre>
+          <a target="_blank" href="http://localhost:8080/theming.html">Output</a>
+          <aside class="notes">
+This is an example of how you can implement themes using csz. This is a simple button component with theming provisions for the color and border. By default both of them will be having palevioletred color, if a theme prop is passed to the button, it will take the colors from the theme for styling the button.
+          </aside>
+        </section>
+        <section>
+          <p>Theming - component usage<p>
+          <pre><code>
+          <script type="text/template">
+const App = () => {
+  const theme = {
+    main: "mediumseagreen"
+  };
+  return html`
+    <div className=${css`
+    font-size: 1.5em;
+    text-align: center;`
+    }>
+      <${Button}>Normal<//>
+      <${Button} theme=${theme}>Primary<//>
+    </div>
+  `;
+};
+          </script>
+          </code></pre>
+          <a target="_blank" href="http://localhost:8080/theming.html">Output</a>
+        </section>
+        <section>
+          <h1>How?</h1>
+          <aside class="notes">
+Now we will take a look at the internals of csz. We will see how it works, what are the different moving parts involved. Since it is a simple library, we can visualise them in just 8 simple steps.
+
+          </aside>
+        </section>
+        <section>
+          <p>1. Import stylis</p>
+          <pre><code>
+          import stylis from './stylis.js';
+          </code></pre>
+          <a target="_blank" href="https://github.com/lukejacksonn/csz">csz</a>
+          <aside class="notes">
+So the first stage is importing stylis. csz actually keeps a local copy of minified stylis.js within its repository to make sure it does not pull in any kind of npm dependencies.
+
+          </aside>
+        </section>
+        <section>
+          <p>2. Creating the hash</p>
+          <pre><code data-line-numbers="2|3|4">const hash = () =>
+            Math.random()
+              .toString(36)
+              .replace('0.', '');
+          </code></pre>
+          <p class="fragment">0.9443615549023372</p>
+          <p>&darr;</p>
+          <p class="fragment">"0.uzmb2hdq59f"</p>
+          <p>&darr;</p>
+          <p class="fragment">"uzmb2hdq59f"</p>
+          <aside class="notes">
+The second step is to create the hash. csz is using the random number generator from the standard Math library in JS and then converting it to a base 36 string representation and finally removing the whole number and the decimal point by just keeping the fractional part for the hash.
+          </aside>
+        </section>
+        <section>
+          <h2>Base 36</h2>
+          <h1 class="fragment fade-up yellow">hexatridecimal</h1>
+          <aside class="notes">
+A small trivia for the audience. Do you know what is base 36 number system is known as? You know there are binary, octal number systems, so similarly base 36 is called hexatridecimal. You know I found a new way to annoy people, so when someone ask me how old are you next time, I am going to say, Hey I am hexatridecimal.
+
+          </aside>
+        </section>
+        <section>
+          <p>3. Adding Internal Stylesheet</p>
+          <pre><code>
+          const sheet = document.createElement('style');
+          document.head.appendChild(sheet);
+          </code>
+          </pre>
+          <aside class="notes">
+The 3rd step is to create a new internal stylesheet with the style tag and append it to the head of the document.
+          </aside>
+        </section>
+        <section>
+          <p>4. Temporary ruleset to prevent FOUC</p>
+          <pre><code>
+const none = hash => `.${hash}{display:none}`;
+const hide = hash => (sheet.innerHTML = none(hash) + sheet.innerHTML);
+const show = hash => (sheet.innerHTML = sheet.innerHTML.replace(none(hash), ''));
+          </code></pre>
+          <aside class="notes">
+Styles imported from a file are inevitably going to take some time to download. Whilst the stylesheet is being downloaded, a temporary ruleset is applied to the element, which hides it (using display: none) until the fetched files have been processed. This was implemented to prevent flashes of unstyled content.
+          </aside>
+        </section>
+        <section>
+          <p>Flash of Unstyled Content</p>
+          <img alt="FOUC" src="examples/assets/fouc.gif"/>
+          <aside class="notes">
+Have you ever noticed an annoying "flash of unstyled content" (FOUC) when a web page first loads? That happens because browsers render things as quickly as possible, often BEFORE your JavaScript executes the first time. So what if some of your initial styles are set via JavaScript…
+          </aside>
+        </section>
+        <section>
+          <p>5. Caching</p>
+          <ul>
+            <li>Inline Styles</li>
+            <li>External Stylesheets (both local and remote)</li>
+          </ul>
+          <aside class="notes">
+When it comes to caching styles, csz is having one of the best caching mechanisms. It enables csz to cache the inline style definitions as well as the external stylesheets fetched from both local and remote.
+          </aside>
+        </section>
+      <section>
+        <p>Cache Key</p>
+        <pre><code>
+  const key = strings[0].startsWith('/')
+    ? strings[0]
+    : strings.reduce(
+        (acc, string, i) =>
+          (acc += string + (values[i] == null ? '' : values[i])),
+        ''
+      );
+        </code></pre>
+        <aside class="notes">
+This is how the cache keys are created.
+        </aside>
+        </section>
+        <section>
+          <p class="yellow">Cache {}</p>
+          <table>
+            <thead>
+              <th>Code</th>
+              <th>Cache Key</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>css`text-align:center;`</td>
+                <td>text-align:center;</td>
+              </tr>
+              <tr>
+                <td>css`/index.css`</td>
+                <td>/index.css</td>
+              </tr>
+              <tr>
+                <td>css`https://unpkg.com/tailwind.css`</td>
+                <td>https://unpkg.com/tailwind.css</td>
+              </tr>
+            </tbody>
+          </table>
+          <pre><code>
+          if (cache[key]) return cache[key].hash;
+          </code></pre>
+          <aside class="notes">
+Basically the keys are just the style definitions if it is an inline usage or the file name or url if it is an external stylesheet.
+          </aside>
+        </section>
+        <section>
+          <pre><code data-line-numbers="4,8">
+          <script type="text/template">const App = () => {
+  return html`
+    <div>
+      <p className=${css`text-align:center;`}>
+        I am center aligned text.
+      </p>
+      <h1>Hello World</h1>
+      <p className=${css`text-align:center;`}>
+        I am too center aligned text.
+      </p>
+    </div>
+  `;
+};
+          </script>
+          </code></pre>
+          <table>
+            <thead>
+              <th>Code</th>
+              <th>Cache Key</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>css`text-align:center;`</td>
+                <td>text-align:center;</td>
+              </tr>
+            </tbody>
+          </table>
+          <aside class="notes">
+Let’s see an example of class name caching, in this example we have two p tags with classnames having the same ruleset, Since the cache key here is the same csz just creates a single class definition instead of two and apply the same class to both the p tags.
+          </aside>
+          <a target="_blank" href="http://localhost:8080/caching.html">Output</a>
+        </section>
+        <section>
+          <p>6. Create class name & Process</p>
+          <pre><code>
+          const className = 'csz-' + hash();
+          const append = process(key)(className);
+          </code></pre>
+          <aside class="notes">
+Next we are prepending the class names with csz- and then using the keys and classnames to process.
+          </aside>
+        </section>
+        <section>
+          <pre>
+          <code>
+const process = key => hash => rules => {
+  sheet.innerHTML += (cache[key] = {
+    hash,
+    rules: stylis()(`.${hash}`, rules)
+  }).rules;
+  if (isExternalStyleSheet(key)) show(hash);
+};
+          </code>
+          </pre>
+          <aside class="notes">
+This is where all the processing takes place. This is where stylis comes into play to compile the styles and generate the css output.
+          </aside>
+        </section>
+        <section>
+          <p>External stylesheets</p>
+          <pre><code>
+// Utility to check external stylesheet
+const isExternalStyleSheet = key => /^(\/|https?:\/\/)/.test(key.trim());
+          </code></pre>
+          <aside class="notes">
+The isExternalStyleSheet is just a utility function to check whether the given template literal is just a style definition or an url, either local stylesheet or remote.
+          </aside>
+        </section>
+        <section>
+          <p>Fetch & show stylesheets</p>
+          <pre><code>
+  if (isExternalStyleSheet(key)) {
+    hide(className);
+    fetch(key)
+      .then(res => res.text())
+      .then(append);
+  } else append(key);
+          </code></pre>
+          <aside class="notes">
+Then based on the type of stylesheet it will append the style definitions. If it is an external stylesheet, it will fetch the resource and append, otherwise just append the styles to the document head.
+          </aside>
+        </section>
+        <section>
+          <pre>
+          <code data-noescape data-line-numbers="36">
+import stylis from './stylis.js';
+const cache = {};
+const hash = () => Math.random() .toString(36) .replace('0.', '');
+const sheet = document.createElement('style');
+document.head.appendChild(sheet);
+const none = hash => `.${hash}{display:none}`;
+const hide = hash => (sheet.innerHTML = none(hash) + sheet.innerHTML);
+const show = 
+  hash => (sheet.innerHTML = sheet.innerHTML.replace(none(hash), ''));
+const isExternalStyleSheet = key => /^(\/|https?:\/\/)/.test(key.trim());
+const process = key => hash => rules => {
+  sheet.innerHTML += (cache[key] = {
+    hash,
+    rules: stylis()(`.${hash}`, rules)
+  }).rules;
+  if (isExternalStyleSheet(key)) show(hash);
+};
+export default (strings, ...values) => {
+  const key = strings[0].startsWith('/')
+    ? strings[0]
+    : strings.reduce(
+        (acc, string, i) =>
+          (acc += string + (values[i] == null ? '' : values[i])),
+        ''
+      );
+  if (cache[key]) return cache[key].hash;
+  const className = 'csz-' + hash();
+  const append = process(key)(className);
+  if (isExternalStyleSheet(key)) {
+    hide(className);
+    fetch(key)
+      .then(res => res.text())
+      .then(append);
+  } else append(key);
+  return className;
+}; 
+          </code>
+          </pre>
+          <aside class="notes">
+And finally it just returns the class name that was dynamically generated using the hash. That’s all in csz, as you can see it’s just a simple library with wonderful capabilities.
+          </aside>
+        </section>
+        <section>
+          <p>References:</p>
+          <ul>
+            <li><a target="_blank" href="https://medium.com/seek-blog/the-end-of-global-css-90d2a4a06284">The End of Global CSS</a></li>
+            <li><a target="_blank" href="https://survivejs.com/react/advanced-techniques/styling-react/
+">Styling React</a></li>
+            <li><a target="_blank" href="https://github.com/MicheleBertoli/css-in-js
+">CSS-in-JS comparison by Michele Bertoli</a></li>
+<li><a target="_blank" href="https://styled-components.com">Styled-components</a></li>
+<li><a target="_blank" href="https://github.com/Code-for-All/lockdown">Lockdown app</a></li>
+<li><a target="_blank" href="https://hashnode.com/post/i-am-michael-jackson-thriller-co-author-of-react-router- and-creator-of-unpkg-ask-me-anything-ck0zk699x001fv3s1mk37ekm6">Michael Jackson AMA</a></li>
+<li><a target="_blank" href="https://medium.com/@tkh44/writing-a-css-in-js-library-from-scratch-96cd23a017b4">Writing a CSS-in-JS library from Scratch</a></li>
+          </ul>
+         </section>
+         <section>
+           <h1>Thank you</h1>
+
+           </section> 
+
+
+
+
+      </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      // More info about initialization & config:
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.initialize({
+        hash: true,
+        width: 1280,
+        height: 900,
+        showNotes: false,
+
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+      });
+    </script>
+  </body>
+</html>
